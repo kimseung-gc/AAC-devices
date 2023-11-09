@@ -1,0 +1,6 @@
+img/save.png save
+>img/back-to.png Julian is good
+>img/food/icons8-strawberry-96.png How's life?
+>img/food/icons8-cookies-96.png Life is a cookie
+>img/food/plate.png Joe Mama
+>
