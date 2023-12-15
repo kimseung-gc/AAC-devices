@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
  * @author Seunghyeon (Hyeon) Kim
  * @author Samuel A. Rebelsky
  */
-public class AssociativeArray<K, V> implements Iterable<KVPair<K, V>>{
+public class AssociativeArray<K, V> implements Iterable<KVPair<K, V>> {
   // +-----------+---------------------------------------------------
   // | Constants |
   // +-----------+
@@ -49,7 +49,7 @@ public class AssociativeArray<K, V> implements Iterable<KVPair<K, V>>{
     // Creating new arrays is sometimes a PITN.
     // Making an empty array of pairs with default capacity.
     this.pairs = (KVPair<K, V>[]) newInstance((new KVPair<K, V>()).getClass(),
-      DEFAULT_CAPACITY); 
+        DEFAULT_CAPACITY);
     // Making another variable with size which is declared as 0.
     this.size = 0;
   } // AssociativeArray()
@@ -63,11 +63,11 @@ public class AssociativeArray<K, V> implements Iterable<KVPair<K, V>>{
    */
   public AssociativeArray<K, V> clone() {
     AssociativeArray<K, V> temp = new AssociativeArray<K, V>();
-    for(int i = 0; i < this.size; i++){
+    for (int i = 0; i < this.size; i++) {
       temp.set(this.pairs[i].key, this.pairs[i].value);
     }
     // returning a cloned AssociativeArray
-    return temp; 
+    return temp;
   } // clone()
 
   /**
@@ -78,16 +78,16 @@ public class AssociativeArray<K, V> implements Iterable<KVPair<K, V>>{
     // an array is visualized as "{ "
     String ret = "{ ";
     // for each of the variable, add the variable converted to string
-    for(int i = 0; i < this.size; i++){
+    for (int i = 0; i < this.size; i++) {
       // treat null as an exception, and add the key to the returning string
-      ret += (this.pairs[i].key==null)? "null" : this.pairs[i].key.toString();
+      ret += (this.pairs[i].key == null) ? "null" : this.pairs[i].key.toString();
       // separate the key and value with a column
       ret += ": ";
       // treat null as an exception, and add value of the key
-      ret += (this.pairs[i].value==null)? "null" : this.pairs[i].value.toString();
+      ret += (this.pairs[i].value == null) ? "null" : this.pairs[i].value.toString();
       // separate each element of the associative array with ","
       // treat the last element as an exception, and add a space only in that case.
-      ret += (i != this.size-1)? ", " : " ";
+      ret += (i != this.size - 1) ? ", " : " ";
     }
     // return ret with closing curly bracket.
     return ret + "}";
@@ -111,7 +111,7 @@ public class AssociativeArray<K, V> implements Iterable<KVPair<K, V>>{
     } catch (Exception e) {
       // when key is not found,
       // check whether the array is full
-      if(this.isFull()){
+      if (this.isFull()) {
         // if it is full, expand the array
         this.expand();
         // then add the elements that has to be set as a new pair.
@@ -120,7 +120,7 @@ public class AssociativeArray<K, V> implements Iterable<KVPair<K, V>>{
         this.size++;
         return;
       }
-      // when it is not full, simply set the last element of the 
+      // when it is not full, simply set the last element of the
       // array with the key and value that is to be set
       this.pairs[this.size] = new KVPair<K, V>(key, value);
       // then increment the size
@@ -136,16 +136,16 @@ public class AssociativeArray<K, V> implements Iterable<KVPair<K, V>>{
    *                              array.
    */
   public V get(K key) throws KeyNotFoundException {
-    if(!hasKey(key)){
+    if (!hasKey(key)) {
       throw new KeyNotFoundException();
     }
-    for(int i = 0; i<this.size; i++){
-      if(this.pairs[i].key != null){
-        if(this.pairs[i].key.equals(key)){
+    for (int i = 0; i < this.size; i++) {
+      if (this.pairs[i].key != null) {
+        if (this.pairs[i].key.equals(key)) {
           return this.pairs[i].value;
         }
-      }else{
-        if(this.pairs[i].key == key){
+      } else {
+        if (this.pairs[i].key == key) {
           return this.pairs[i].value;
         }
       }
@@ -174,21 +174,21 @@ public class AssociativeArray<K, V> implements Iterable<KVPair<K, V>>{
    * in the associative array, does nothing.
    */
   public void remove(K key) {
-    try{
+    try {
       // attempt to find the key, and save as a variable ind
       int ind = find(key);
       // when found, remove the pair at that index
       this.pairs[ind] = null;
       // then iterate through the array to shift the elements left.
-      for(int i = ind+1; i<this.size; i++){
+      for (int i = ind + 1; i < this.size; i++) {
         // shifting the rest of the array left.
-        this.pairs[i-1] = this.pairs[i]; 
+        this.pairs[i - 1] = this.pairs[i];
         // deleting the moved element.
         this.pairs[i] = null;
       }
       // decrement the size.
       this.size--;
-    }catch(Exception e){
+    } catch (Exception e) {
       // when nothing is found, finish the function without modifying anything.
       return;
     }
@@ -216,9 +216,10 @@ public class AssociativeArray<K, V> implements Iterable<KVPair<K, V>>{
 
   /**
    * Determines whether the AssociativeArray is full.
+   * 
    * @return int
    */
-  private boolean isFull(){
+  private boolean isFull() {
     // return whether the array is full (length == size)
     return (this.pairs.length == size());
   } // isFull()
@@ -227,7 +228,8 @@ public class AssociativeArray<K, V> implements Iterable<KVPair<K, V>>{
    * Expand the underlying array.
    */
   private void expand() {
-    // redeclare pairs as a copied array of current pairs, but extended with DEFAULT_CAPACITY
+    // redeclare pairs as a copied array of current pairs, but extended with
+    // DEFAULT_CAPACITY
     // more elements.
     this.pairs = java.util.Arrays.copyOf(this.pairs, this.pairs.length + DEFAULT_CAPACITY);
   } // expand()
@@ -237,13 +239,13 @@ public class AssociativeArray<K, V> implements Iterable<KVPair<K, V>>{
    * If no such entry is found, throws an exception.
    */
   private int find(K key) throws KeyNotFoundException {
-    for(int i = 0; i < this.size; i++){
-      if(this.pairs[i].key != null){
-        if(this.pairs[i].key.equals(key)){
+    for (int i = 0; i < this.size; i++) {
+      if (this.pairs[i].key != null) {
+        if (this.pairs[i].key.equals(key)) {
           return i;
         }
-      }else{
-        if(this.pairs[i].key == key){
+      } else {
+        if (this.pairs[i].key == key) {
           return i;
         }
       }
@@ -252,7 +254,7 @@ public class AssociativeArray<K, V> implements Iterable<KVPair<K, V>>{
   } // find(K)
 } // class AssociativeArray
 
-class AssociativeArrayIterator<K, V> implements Iterator<KVPair<K, V>>{
+class AssociativeArrayIterator<K, V> implements Iterator<KVPair<K, V>> {
   /**
    * Variable that contains the index of the associative array
    */
@@ -275,7 +277,7 @@ class AssociativeArrayIterator<K, V> implements Iterator<KVPair<K, V>>{
   /**
    * Create a new iterator.
    */
-  public AssociativeArrayIterator(AssociativeArray<K, V> associativeArray){
+  public AssociativeArrayIterator(AssociativeArray<K, V> associativeArray) {
     this.i = 0;
     this.temp = associativeArray.pairs;
     this.len = associativeArray.size();
@@ -288,7 +290,7 @@ class AssociativeArrayIterator<K, V> implements Iterator<KVPair<K, V>>{
   /**
    * Calls the next element of the associative array
    */
-  public KVPair<K, V> next() throws NoSuchElementException{
+  public KVPair<K, V> next() throws NoSuchElementException {
     if (!this.hasNext()) {
       throw new NoSuchElementException("no elements remain");
     }
@@ -298,7 +300,7 @@ class AssociativeArrayIterator<K, V> implements Iterator<KVPair<K, V>>{
   /**
    * Returns whether the next element is existent
    */
-  public boolean hasNext(){
-    return (i<len);
+  public boolean hasNext() {
+    return (i < len);
   } // hasNext()
 } // class AssociativeArray
