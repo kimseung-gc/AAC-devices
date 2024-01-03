@@ -1,4 +1,4 @@
-# MP05: AAC Devices
+# AAC Devices
 
 ## Groups
 ```
